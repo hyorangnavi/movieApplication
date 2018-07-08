@@ -1,5 +1,6 @@
 package org.knulikelion.movieapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +14,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    Button thumbUp, thumbDown, writing, showAll;
-    TextView countUp, countDown;
+    Button thumbUp, thumbDown, writing, showAll; // 좋아요 버튼, 싫어요 버튼, 작성하기 버튼, 모두보기 버튼
+    TextView countUp, countDown; //좋아요 버튼 또는 싫어요 버튼 선택 시 수 증가
     boolean likeState; //좋아요 버튼이 선택 상태 알리기 위해서
     boolean dislikeState; //싫어요 버튼이 선택 상태 알리기 위해서
-    int likeCount = 10;
-    int dislikeCount = 10;
+    int likeCount = 15; //좋아요 버튼 초기값 설정
+    int dislikeCount = 10; // 싫어요 버튼 초기값 설정
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +36,21 @@ public class MainActivity extends AppCompatActivity {
         CommentAdapter adapter = new CommentAdapter();
         adapter.addItem(new CommentItem("kym71**", "10분전",
                 "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.",R.drawable.user1));
-        adapter.addItem(new CommentItem("kym72**", "20분전",
+        adapter.addItem(new CommentItem("kym71**", "10분전",
                 "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.",R.drawable.user1));
-        adapter.addItem(new CommentItem("kym73**", "30분전",
+        adapter.addItem(new CommentItem("kym71**", "10분전",
                 "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.",R.drawable.user1));
         listView.setAdapter(adapter);
 
         thumbUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(likeState == false) {
+                if(!likeState) {
                     incrLikeCount();
+                    if (dislikeState) {
+                        decrDisLikeCount();
+                        dislikeState = !dislikeState;
+                    }
                 }
                 else {
                     decrLikeCount();
@@ -57,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
         thumbDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(likeState == false) {
+                if(!dislikeState) {
                     incrDisLikeCount();
+                    if(likeState){
+                        decrLikeCount();
+                        likeState = !likeState;
+                    }
                 }
                 else{
                     decrDisLikeCount();
@@ -105,10 +114,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            CommentView view = new CommentView(getApplicationContext());
-            CommentItem item = items.get(position);
-            view.setName(item.getName());
-            view.setTime(item.getTime());
+            CommentView view;
+            if (convertView == null) {
+                view = new CommentView(getApplicationContext());
+            }
+            else {
+                view = (CommentView) convertView;
+            }
             return view;
         }
     }

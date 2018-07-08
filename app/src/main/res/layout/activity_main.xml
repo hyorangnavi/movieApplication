@@ -142,7 +142,7 @@
             tools:layout_width="match_parent">
 
             <LinearLayout
-                android:id="@+id/tickteting"
+                android:id="@+id/ticketing"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -360,7 +360,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="0dp">
-
                 </ListView>
             </RelativeLayout>
 
@@ -374,10 +373,7 @@
                 android:background="@drawable/button"
                 android:text="@string/show_all"
                 android:textColor="#7300F7" />
-
-
         </LinearLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"

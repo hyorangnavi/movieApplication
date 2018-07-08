@@ -28,4 +28,8 @@
     <string name="write">작성하기</string>
     <string name="show_all">모두보기</string>
     <string name="book">예매하기</string>
+    <string name="gpa_setting">평점을 입력해 주세요.</string>
+    <string name="save">저장</string>
+    <string name="cancel">취소</string>
+
 </resources>
